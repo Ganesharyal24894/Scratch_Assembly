@@ -21,7 +21,6 @@ SECTIONS
   {
     . = ALIGN(4);
     *(.text)
-    *(.text*)
     . = ALIGN(4);
   } >FLASH
 
@@ -35,13 +34,14 @@ SECTIONS
    .data :
   {  
     . = ALIGN(4);
-    _sdata = . ; 
+    PROVIDE(_sdata = .) ; 
     *(.data)
-    _edata = . ;
+    PROVIDE(_edata = .);
     . = ALIGN(4);      
   } >RAM AT> FLASH
 
-    _sload_data = LOADADDR(.data);      /*This contains the load address of the .data section*/
+    PROVIDE(_sload_data = LOADADDR(.data));                 /*This contains the load address of the .data section*/
+    PROVIDE(_StackStart = ORIGIN(RAM) + LENGTH(RAM) );      /*This contains the Stack_Start/RAM_End address      */
 
    .bss :
   {
